@@ -1,0 +1,13 @@
+user*
+host*
+auth*
+privatekey
+passphrase
+password
+port
+remote*
+local*
+interval*
+start
+end
+keep
