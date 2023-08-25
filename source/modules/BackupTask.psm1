@@ -1,5 +1,5 @@
 Import-Module Posh-SSH
-Import-Module '$PSScriptRoot\NormalizePaths.psm1'
+Import-Module "$PSScriptRoot\NormalizePaths.psm1"
 
 function BackupTask {
     param (

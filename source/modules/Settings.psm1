@@ -37,28 +37,30 @@ function TypeSettings {
         [Parameter(Mandatory = $true)]
         $Settings
     )
-    if ($null -ne $Settings[$SettingKey]['start']) {
-        $Settings[$SettingKey]['start'] = [datetime]::ParseExact($Settings[$SettingKey]['start'], 'yyyy-MM-dd HH:mm:ss', [System.Globalization.CultureInfo]::InvariantCulture)
+    foreach ($SettingKey in $Settings.Keys) {
+        if ($null -ne $Settings[$SettingKey]['start']) {
+            $Settings[$SettingKey]['start'] = [datetime]::ParseExact($Settings[$SettingKey]['start'], 'yyyy-MM-dd HH:mm:ss', [System.Globalization.CultureInfo]::InvariantCulture)
+        }
+        else {
+            $Settings[$SettingKey]['start'] = [datetime]::MinValue
+        }
+        if ($null -ne $Settings[$SettingKey]['end']) {
+            $Settings[$SettingKey]['end'] = [datetime]::ParseExact($Settings[$SettingKey]['end'], 'yyyy-MM-dd HH:mm:ss', [System.Globalization.CultureInfo]::InvariantCulture)
+        }
+        else {
+            $Settings[$SettingKey]['end'] = [datetime]::MaxValue
+        }
+        if (-not $Settings[$SettingKey]['port']) {
+            $Settings[$SettingKey]['port'] = '22'
+        }
+        if (-not $Settings[$SettingKey]['keep']) {
+            $Settings[$SettingKey]['keep'] = [int]::MaxValue
+        }
+        else {
+            $Settings[$SettingKey]['keep'] = [int]$Settings[$SettingKey]['keep']
+        }
+        $Settings[$SettingKey]['interval'] = [timespan]::Parse($Settings[$SettingKey]['interval'])
     }
-    else {
-        $Settings[$SettingKey]['start'] = [datetime]::MinValue
-    }
-    if ($null -ne $Settings[$SettingKey]['end']) {
-        $Settings[$SettingKey]['end'] = [datetime]::ParseExact($Settings[$SettingKey]['end'], 'yyyy-MM-dd HH:mm:ss', [System.Globalization.CultureInfo]::InvariantCulture)
-    }
-    else {
-        $Settings[$SettingKey]['end'] = [datetime]::MaxValue
-    }
-    if (-not $Settings[$SettingKey]['port']) {
-        $Settings[$SettingKey]['port'] = '22'
-    }
-    if (-not $Settings[$SettingKey]['keep']) {
-        $Settings[$SettingKey]['keep'] = [int]::MaxValue
-    }
-    else {
-        $Settings[$SettingKey]['keep'] = [int]$Settings[$SettingKey]['keep']
-    }
-    $Settings[$SettingKey]['interval'] = [timespan]::Parse($Settings[$SettingKey]['interval'])
     return $Settings
 }
 

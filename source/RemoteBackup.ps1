@@ -12,13 +12,14 @@ Import-Module "$PSScriptRoot\modules\Settings.psm1"
 # Load settings
 $Settings = NormalizeSettings -Settings (ParseIniFile -Path $SettingsPath)
 
+Write-Host $Settings['chaoticdice']
 foreach ($SettingKey in $Settings.Keys) {
     $now = Get-Date -AsUTC
     CreateRegistry -Root HKLM -SubKey "SOFTWARE\WOW6432Node\RemoteBackup\$SettingKey"
     $parentKeyPath = "HKLM:\SOFTWARE\WOW6432Node\RemoteBackup\$SettingKey"
     $LatestBackups = Get-ItemProperty -Path $parentKeyPath -Name 'LatestBackups' -ErrorAction SilentlyContinue
     if ($null -ne $LatestBackups) {
-        $LatestBackups = $LatestBackups.Split(',') | ForEach-Object { [datetime]::ParseExact($_, 'yyyy-MM-dd HH:mm:ss', [System.Globalization.CultureInfo]::InvariantCulture) }
+        $LatestBackups = $LatestBackups.Split(',') | Where-Object { $_ } | ForEach-Object { [datetime]::ParseExact($_, 'yyyy-MM-dd HH:mm:ss', [System.Globalization.CultureInfo]::InvariantCulture) }
     }
     if (-not $LatestBackups) {
         if ($now -ge $Settings[$SettingKey]['start']) {
