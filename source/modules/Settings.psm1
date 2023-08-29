@@ -60,6 +60,7 @@ function TypeSettings {
             $Settings[$SettingKey]['keep'] = [int]$Settings[$SettingKey]['keep']
         }
         $Settings[$SettingKey]['interval'] = [timespan]::Parse($Settings[$SettingKey]['interval'])
+        $Settings[$SettingKey]['remote'] = $Settings[$SettingKey]['remote'].Split(',')
     }
     return $Settings
 }
