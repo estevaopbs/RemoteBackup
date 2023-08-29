@@ -44,18 +44,20 @@ Create a `.ini` file to define the backup settings for each remote system. The e
 
 For each remote system, create a section in the `.ini` file with the following parameters:
 
-- **`user`**: Remote user to authenticate with.
-- `host`: Remote host address.
-- `auth`: Authentication method (privatekey or password).
+- `user*`: Remote user to authenticate with. **mandatory**
+- `host*`: Remote host address.
+- `auth*`: Authentication method (privatekey or password).
 - `privatekey`: Path to the private key file (required for private key authentication).
 - `password`: Remote user password (required for password authentication).
 - `port`: Remote SSH port (default is 22).
-- `remote`: List of directories and files to backup, separated by a comma `,` character.
-- `local`: Path to the local directory where backups will be stored.
-- `ìnterval`: Backup interval, formatted as a valid PowerShell `TimeSpan` (DD.HH.mm.SS).
+- `remote*`: List of directories and files to backup, separated by a comma `,` character.
+- `local*`: Path to the local directory where backups will be stored.
+- `ìnterval*`: Backup interval, formatted as a valid PowerShell `TimeSpan` (DD.HH.mm.SS).
 - `start`: Date and time to start the backup (YYYY-MM-DD HH:mm:SS).
 - `end`: Date and time to end the backup (YYYY-MM-DD HH:mm:SS).
-- `keep`: Number of backups to retain.
+- `keep`: Number of backups to retain (default is 2,147,483,647).
+
+The asterisk `*` character marks the mandatory parameters.
 
 ## Usage
 
