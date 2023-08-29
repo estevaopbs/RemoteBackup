@@ -52,7 +52,7 @@ For each remote system, create a section in the `.ini` file with the following p
 - `port`: Remote SSH port (default is 22).
 - `remote*`: List of directories and files to backup, separated by a comma `,` character.
 - `local*`: Path to the local directory where backups will be stored.
-- `ìnterval*`: Backup interval, formatted as a valid PowerShell `TimeSpan` (DD.HH.mm.SS).
+- `interval*`: Backup interval, formatted as a valid PowerShell `TimeSpan` (DD.HH.mm.SS).
 - `start`: Date and time to start the backup (YYYY-MM-DD HH:mm:SS).
 - `end`: Date and time to end the backup (YYYY-MM-DD HH:mm:SS).
 - `keep`: Number of backups to retain (default is 2,147,483,647).
