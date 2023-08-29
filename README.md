@@ -44,7 +44,7 @@ Create a `.ini` file to define the backup settings for each remote system. The e
 
 For each remote system, create a section in the `.ini` file with the following parameters:
 
-- `user*`: Remote user to authenticate with. **mandatory**
+- `user*`: Remote user to authenticate with.
 - `host*`: Remote host address.
 - `auth*`: Authentication method (privatekey or password).
 - `privatekey`: Path to the private key file (required for private key authentication).
