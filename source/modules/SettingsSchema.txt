@@ -2,7 +2,6 @@ user*
 host*
 auth*
 privatekey
-passphrase
 password
 port
 remote*

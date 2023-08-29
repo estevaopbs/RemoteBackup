@@ -44,11 +44,10 @@ Create a `.ini` file to define the backup settings for each remote system. The e
 
 For each remote system, create a section in the `.ini` file with the following parameters:
 
-- `user`: Remote user to authenticate with.
+- **`user`**: Remote user to authenticate with.
 - `host`: Remote host address.
 - `auth`: Authentication method (privatekey or password).
 - `privatekey`: Path to the private key file (required for private key authentication).
-- `passphrase`: Passphrase for the private key (if applicable).
 - `password`: Remote user password (required for password authentication).
 - `port`: Remote SSH port (default is 22).
 - `remote`: List of directories and files to backup, separated by a comma `,` character.
