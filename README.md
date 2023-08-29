@@ -53,8 +53,8 @@ For each remote system, create a section in the `.ini` file with the following p
 - `remote*`: List of directories and files to backup, separated by a comma `,` character.
 - `local*`: Path to the local directory where backups will be stored.
 - `interval*`: Backup interval, formatted as a valid PowerShell `TimeSpan` (D.HH.mm.SS).
-- `start`: Date and time to start the backup (YYYY-MM-DD HH:mm:SS) in UTC time.
-- `end`: Date and time to end the backup (YYYY-MM-DD HH:mm:SS) in UTC time.
+- `start`: Date and time (YYYY-MM-DD HH:mm:SS) to start the backup cycle in UTC time.
+- `end`: Date and time (YYYY-MM-DD HH:mm:SS) to end the backup cycle in UTC time.
 - `keep`: Number of backups to retain (default is 2,147,483,647).
 
 The asterisk `*` character marks the mandatory parameters.
