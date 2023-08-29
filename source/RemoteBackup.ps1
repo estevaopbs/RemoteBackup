@@ -22,7 +22,6 @@ foreach ($SettingKey in $Settings.Keys) {
     $LatestBackups = (Get-ItemProperty -Path $parentKeyPath -Name 'LatestBackups' -ErrorAction SilentlyContinue).LatestBackups
     if ($null -ne $LatestBackups) {
         $LatestBackups = $LatestBackups.Split(',') | Where-Object { $_ } | ForEach-Object { [datetime]::ParseExact($_, 'yyyy-MM-dd HH:mm:ss', [System.Globalization.CultureInfo]::InvariantCulture) }
-        Write-Host $LatestBackups.GetType().ToString()
         if ($LatestBackups.GetType() -eq [datetime]) {
             $LatestBackups = @($LatestBackups)
         }
