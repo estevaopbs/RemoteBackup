@@ -1,40 +1,39 @@
 # Description: This module contains functions for normalizing paths.
 
-# Get-LongestCommonSubstring returns the longest common substring of a list of strings.
-function Get-LongestCommonSubstring {
+function Get-CommonParentPath {
     param (
-        [string[]]$strings
+        [string[]]$paths
     )
 
-    if ($strings.Count -eq 0) {
-        Write-Host "No strings provided."
-        return
+    if ($paths.Count -eq 0) {
+        Throw "No paths provided."
     }
 
-    $shortestString = $strings | ForEach-Object { $_.Length } | Measure-Object -Minimum
-    $maxLength = $shortestString.Minimum
-    $longestCommonSubstring = ""
+    $SplitPaths = $strings | ForEach-Object { , ($_.Split('/') ) }
+
+    $shortestPath = $SplitPaths | ForEach-Object { $_.Count } | Measure-Object -Minimum
+    $maxLength = $shortestPath.Minimum
+    $CommonParentPath = @()
 
     for ($i = 0; $i -lt $maxLength; $i++) {
-        $char = $strings[0][$i]
+        $directory = $SplitPaths[0][$i]
 
         $common = $true
-        foreach ($str in $strings) {
-            if ($str[$i] -ne $char) {
+        foreach ($path in $SplitPaths) {
+            if ($path[$i] -ne $directory) {
                 $common = $false
                 break
             }
         }
 
         if ($common) {
-            $longestCommonSubstring += $char
+            $CommonParentPath += $directory
         }
         else {
             break
         }
     }
-
-    return $longestCommonSubstring
+    return ($CommonParentPath -join '/')
 }
 
 # NormalizePaths removes the longest common substring from all paths.
@@ -48,18 +47,18 @@ function NormalizePaths {
         return
     }
 
-    $longestCommonSubstring = Get-LongestCommonSubstring -strings $paths
-    if ($longestCommonSubstring.Length -eq 0) {
+    $CommonParentPath = Get-CommonParentPath -paths $paths
+    if ($CommonParentPath.Length -eq 0) {
         Write-Host "No common substring found."
         return
     }
 
     $normalizedPaths = @()
     foreach ($path in $paths) {
-        $normalizedPaths += $path.Substring($longestCommonSubstring.Length)
+        $normalizedPaths += $path.Substring($CommonParentPath.Length)
     }
 
     return @{'normalizedPaths' = $normalizedPaths
-        'commonParentPath'     = $longestCommonSubstring
+        'commonParentPath'     = $CommonParentPath
     }
 }
