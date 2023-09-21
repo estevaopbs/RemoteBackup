@@ -41,10 +41,10 @@ foreach ($SettingKey in $Settings.Keys) {
         if ($now -ge $nextBackup) {
             BackupTask -Setting $Settings[$SettingKey] -Timestamp $now -Name $SettingKey
             if ($LatestBackups.Count -ge $Settings[$SettingKey]['keep']) {
-                $RemoveFile = $SettingKey + '_' + $LatestBackups[0].ToString('yyyy-MM-dd_HH:mm:ss') + '.tar.gz'
+                $RemoveFile = $SettingKey + '_' + $LatestBackups[0].ToString('yyyy-MM-dd_HH-mm-ss') + '.tar.gz'
                 $RemoveFilePath = Join-Path -Path $Settings[$SettingKey]['local'] -ChildPath $RemoveFile
                 Remove-Item -Path $RemoveFilePath -Force
-                $LatestBackups = ($LatestBackups | Select-Object -Skip 1).ToList()
+                $LatestBackups = ($LatestBackups | Select-Object -Skip 1)
             }
             $LatestBackups = $LatestBackups | ForEach-Object { $_.ToString('yyyy-MM-dd HH:mm:ss') }
             if ($LatestBackups.GetType() -eq [string]) {
