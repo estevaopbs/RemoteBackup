@@ -78,7 +78,7 @@ function VerifySettings {
         if (($Setting['auth'] -eq 'password') -and -not $Setting['password']) {
             throw "Missing password parameter in settings block $SettingKey"
         }
-        if (-not $Setting['auth'] -in @('password', 'privatekey')) {
+        if (-not ($Setting['auth'] -in @('password', 'privatekey'))) {
             throw "Invalid auth parameter in settings block $SettingKey. Expected values: password, privatekey"
         }
         $timestamp = [datetime]::MinValue
@@ -87,6 +87,12 @@ function VerifySettings {
             if (!($null -eq $Setting[$timestampParameter]) -and !([DateTime]::TryParseExact($Setting[$timestampParameter], $timestampFormat, [System.Globalization.CultureInfo]::InvariantCulture, [System.Globalization.DateTimeStyles]::None, [ref]$timestamp))) {
                 throw "Invalid timestamp format in parameter $timestampParameter in settings block $SettingKey. Expected format: $timestampFormat"
             }
+        }
+        if (-not ($Setting['interval'] -match '^\d+\.\d{2}:\d{2}:\d{2}$')) {
+            throw "Invalid interval format in settings block $SettingKey. Expected format: D.HH:MM:SS"
+        }
+        if (-not ([timespan]::Parse($Setting['interval']) -gt 0)) {
+            throw "Invalid interval value in settings block $SettingKey. It must be a positive timespan"
         }
     }
     if ($Setting['port']) {
