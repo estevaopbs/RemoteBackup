@@ -13,7 +13,7 @@ function BackupTask {
     switch ($Settings['auth']) {
         'password' {
             $creds = New-Object System.Management.Automation.PSCredential($Settings['user'], (ConvertTo-SecureString -String $Settings['password'] -AsPlainText -Force))
-            $session = New-SSHSession -ComputerName $Settings['host'] -Credential $creds -AcceptKey -Port $Settings['port']
+            $session = New-SSHSession -ComputerName $Settings['host'] -Credential $creds -AcceptKey -Port $Settings['port'] -Force
         }
         'privatekey' {
             $creds = New-Object System.Management.Automation.PSCredential($Settings['user'], (ConvertTo-SecureString -String '0' -AsPlainText -Force))
@@ -34,7 +34,7 @@ function BackupTask {
     Invoke-SSHCommand -SessionId $session.SessionId -Command "cd $WorkingDirectory && tar czvf /tmp/$BackupName --transform 's,^,./,' $($Paths -join ' ')" -TimeOut ([int]::MaxValue)
     switch ($Settings['auth']) {
         'password' {
-            Get-SCPItem -Path "/tmp/$BackupName" -Destination $Settings['local'] -ComputerName $Settings['host'] -Credential $creds -AcceptKey -Port $Settings['port'] -PathType 'File'
+            Get-SCPItem -Path "/tmp/$BackupName" -Destination $Settings['local'] -ComputerName $Settings['host'] -Credential $creds -AcceptKey -Port $Settings['port'] -PathType 'File' -Force
         }
         'privatekey' {
             Get-SCPItem -Path "/tmp/$BackupName" -Destination $Settings['local'] -ComputerName $Settings['host'] -KeyFile $Settings['privatekey'] -Credential $creds -AcceptKey -Port $Settings['port'] -PathType 'File'
